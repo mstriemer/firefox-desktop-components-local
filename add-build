@@ -21,10 +21,10 @@ pushd "$firefox_path"
 popd
 
 # Move build to repo
-mv "$firefox_path/browser/components/storybook/storybook-static" "builds/$build_name"
+mv "$firefox_path/browser/components/storybook/storybook-static" "docs/$build_name"
 
 # Serve and preview
-pushd "builds/$build_name"
+pushd "docs/$build_name"
 echo "View the build: http://localhost:5703/"
 python -m http.server 5703
 popd
