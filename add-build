@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+
+# add-build firefox_path build_name
+#
+# Build the Firefox storybook into the repo.
+
+# Parse arguments
+firefox_path="$1"
+build_name="$2"
+
+# Validate arguments
+if [[ -z "$firefox_path" || -z "$build_name" ]]; then
+    echo "Usage: add-build <firefox_path> <build_name>"
+    exit 1
+fi
+
+# Build storybook
+pushd "$firefox_path"
+./mach build && ./mach storybook build
+popd
+
+# Move build to repo
+mv "$firefox_path/browser/components/storybook/storybook-static" "builds/$build_name"
+
+# Serve and preview
+pushd "builds/$build_name"
+echo "View the build: http://localhost:5703/"
+python -m http.server 5703
+popd
+
+# Prompt for success
+read -p "Was the build successful? [y/N] " response
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    jj commit -m "Add $build_name Storybook"
+    echo "Committed: Add $build_name Storybook"
+else
+    echo "Build not committed. You can manually review and commit later."
+fi

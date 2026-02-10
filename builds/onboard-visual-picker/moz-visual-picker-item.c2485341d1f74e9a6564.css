@@ -1,0 +1,137 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:host {
+  --visual-picker-item-border-radius: var(--border-radius-medium);
+  --visual-picker-item-border-width: var(--border-width);
+  --visual-picker-item-border-color: var(--border-color-interactive);
+  --visual-picker-item-background-color: var(--background-color-box);
+  --visual-picker-item-background-color-hover: var(--button-background-color-hover);
+  --visual-picker-item-background-color-active: var(--button-background-color-active);
+
+  cursor: default;
+  display: flex;
+}
+
+:host([variant="smartwindow"]) {
+  color: rgb(33, 3, 64);
+  width: 224px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  --aiwindow-input-gradient: linear-gradient(117deg, #321bfd -17.87%, #cf30e2 52.93%, #f90 89.02%, #f5c451 109.44%);
+  --aiwindow-input-gradient-dark: linear-gradient(90deg, #945af2, #f37e49);
+  --bg-transparent: transparent;
+  --card-bg: light-dark(#fff, #191622);
+  --card-bg-translucent: light-dark(color-mix(in srgb, #fff 60%, var(--bg-transparent)), color-mix(in srgb, #191622 40%, var(--bg-transparent)));
+  --card-border-color: light-dark(#f1e7f8, #736a8a);
+  --card-border-gradient: light-dark(var(--aiwindow-input-gradient), var(--aiwindow-input-gradient-dark));
+  --card-selected-shadow: light-dark(0 3px 16px 0 color-mix(in srgb, rgb(59 34 121) 12%, var(--bg-transparent)), 0 27px 124px 0 rgba(117, 67, 227, 0.18));
+
+  --visual-picker-item-border-radius: var(--border-radius-large);
+  --visual-picker-item-border-color: var(--border-color-card);
+  --visual-picker-item-background-color: var(--card-bg-translucent);
+  --visual-picker-item-background-color-hover: var(--card-bg);
+  --visual-picker-item-background-color-active: var(--card-bg);
+
+  .picker-item {
+    padding-block: var(--space-large) var(--space-medium);
+    justify-content: start;
+    gap: var(--space-large);
+
+    &[checked] {
+      --visual-picker-item-border-width: 2px;
+      margin: 1px;
+      border-color: transparent;
+      background: linear-gradient(var(--card-bg)) padding-box, var(--aiwindow-input-gradient) border-box;
+      box-shadow: var(--card-selected-shadow);
+    }
+  }
+
+  .image-item img {
+    width: 96px;
+    aspect-ratio: 1;
+  }
+
+  .label {
+    font-size: 20px;
+    font-weight: 613;
+  }
+
+  .label + .description {
+    font-size: 15px;
+    font-weight: 320;
+    margin-block-start: var(--space-medium);
+  }
+}
+
+.picker-item {
+  --visual-picker-item-border-radius-inner: calc(var(--visual-picker-item-border-radius) - var(--visual-picker-item-border-width));
+
+  overflow: hidden;
+  border: var(--visual-picker-item-border-width) solid var(--visual-picker-item-border-color);
+  border-radius: var(--visual-picker-item-border-radius);
+  margin: 2px;
+  flex: 1;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  &[checked] {
+    --visual-picker-item-border-width: 3px;
+    border-color: var(--border-color-selected);
+    margin: 0;
+  }
+
+  ::slotted(:first-child) {
+    --visual-picker-item-child-border-radius: var(--visual-picker-item-border-radius-inner);
+    border-radius: var(--visual-picker-item-child-border-radius);
+  }
+
+  .text-content:has(.label, .description) {
+    padding: var(--space-small) var(--space-medium) var(--space-medium);
+    text-align: center;
+  }
+
+  .label {
+    margin: 0;
+  }
+
+  .description {
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: var(--text-color-deemphasized);
+  }
+
+  .label + .description {
+    margin-block-start: var(--space-xsmall);
+  }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.image-item {
+  background-color: var(--visual-picker-item-background-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: var(--visual-picker-item-background-color-hover);
+  }
+
+  &:hover:active {
+    background-color: var(--visual-picker-item-background-color-active);
+  }
+}
